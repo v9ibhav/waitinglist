@@ -1,0 +1,51 @@
+/* Custom theme styles for orangish color #ff781f */
+.submit-button {
+  background-color: #ff781f !important;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #e86c15 !important;
+}
+
+.title {
+  color: #ff781f;
+}
+
+.hero-text-holder h1 {
+  color: #ff781f;
+}
+
+.form-block .w-button {
+  background-color: #ff781f;
+}
+
+.form-block .text-field:focus {
+  border-color: #ff781f;
+}
+
+.success-message {
+  background-color: rgba(255, 120, 31, 0.1);
+  border: 1px solid #ff781f;
+}
+
+.person-container {
+  border: 2px solid #ff781f;
+}
+
+.paragraph-simple {
+  color: #ff781f;
+}
+
+/* Additional accent elements */
+a {
+  color: #ff781f;
+}
+
+a:hover {
+  color: #e86c15;
+}
+
+.form-cta {
+  border-top: 1px solid rgba(255, 120, 31, 0.2);
+}
