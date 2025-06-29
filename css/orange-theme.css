@@ -47,5 +47,203 @@ a:hover {
 }
 
 .form-cta {
+  /* Removing the border-top that was creating the yellow line */
+  /* border-top: 1px solid rgba(255, 120, 31, 0.2); */
+}
+
+/* Trusted Brands Strip Styles */
+.trusted-brands-strip {
+  margin: 15px 0 20px;
+  padding: 10px 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0; /* Start with opacity 0 for animation */
+  transform: translateY(20px); /* Start slightly below final position */
+  transition: opacity 0.8s ease, transform 0.8s ease; /* Add smooth transition */
+}
+
+.trusted-brands-strip .trusted-brands-title {
+  color: white;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+  font-weight: 700; /* Increased from 600 to 700 */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3); /* Added text shadow for better visibility */
+  opacity: 1; /* Ensuring full opacity */
+}
+
+.trusted-brands-strip .trusted-brands-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.trusted-brands-strip .brand-logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+}
+
+.trusted-brands-strip .brand-logo {
+  max-height: 100%;
+  max-width: 90px;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+  filter: grayscale(30%);
+}
+
+.trusted-brands-strip .brand-logo:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+/* Original Trusted Brands Section Styles - Keep for reference */
+.trusted-brands-section {
+  display: none; /* Hide the original section */
+  padding: 40px 0;
+  background-color: #f9f9f9;
   border-top: 1px solid rgba(255, 120, 31, 0.2);
+}
+
+.trusted-brands-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.trusted-brands-title {
+  color: #555;
+  margin-bottom: 25px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.trusted-brands-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.brand-logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+}
+
+.brand-logo {
+  max-height: 100%;
+  max-width: 120px;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.brand-logo:hover {
+  opacity: 1;
+}
+
+/* Brand Logos Carousel Styles */
+.brands-carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+  margin: 0 auto;
+}
+
+.brands-carousel {
+  width: 80%;
+  overflow: hidden;
+  position: relative;
+}
+
+.brands-carousel-track {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.carousel-btn {
+  background-color: rgba(255, 120, 31, 0.2);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0 10px;
+  z-index: 5;
+}
+
+.carousel-btn:hover {
+  background-color: rgba(255, 120, 31, 0.5);
+}
+
+.carousel-btn:focus {
+  outline: none;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-dot.active {
+  background-color: rgba(255, 120, 31, 0.7);
+}
+
+/* Responsive carousel adjustments */
+@media screen and (max-width: 767px) {
+  .brands-carousel {
+    width: 75%;
+  }
+
+  .carousel-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .brands-carousel {
+    width: 70%;
+  }
+
+  .carousel-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    margin: 0 5px;
+  }
 }
