@@ -66,7 +66,7 @@ a:hover {
 }
 
 .trusted-brands-strip .trusted-brands-title {
-  color: white;
+  color: #ffab76; /* Changed from white to a lighter shade of the orange theme */
   margin-bottom: 12px;
   font-size: 0.9rem;
   font-weight: 700; /* Increased from 600 to 700 */
@@ -89,19 +89,49 @@ a:hover {
   align-items: center;
   justify-content: center;
   height: 40px;
+  margin-right: 30px; /* Add right margin for spacing */
+  position: relative;
+  transition: all 0.5s ease;
 }
 
 .trusted-brands-strip .brand-logo {
   max-height: 100%;
   max-width: 90px;
-  opacity: 0.7;
-  transition: opacity 0.3s ease;
-  filter: grayscale(30%);
+  opacity: 0.85; /* Increased from 0.7 for better visibility */
+  transition: all 0.5s ease; /* Changed from opacity to all for smoother transitions */
+  filter: grayscale(10%); /* Reduced grayscale from 30% to make colors more vibrant */
+  transform: scale(1);
 }
 
 .trusted-brands-strip .brand-logo:hover {
   opacity: 1;
   filter: grayscale(0%);
+  transform: scale(1.1); /* Add a slight scale effect on hover */
+}
+
+.trusted-brands-strip .brands-carousel {
+  width: 100%;
+  overflow: hidden; /* Hide overflow for smooth scrolling */
+  position: relative;
+  max-width: 900px;
+}
+
+.trusted-brands-strip .brands-carousel-track {
+  display: flex;
+  align-items: center;
+  gap: 30px; /* Space between logos */
+  transition: none; /* Remove fixed transition for smooth animation */
+  min-width: max-content; /* Ensure all logos display properly */
+  position: relative; /* Add position relative for absolute positioning of children */
+}
+
+/* Styles for cloned logos to ensure they look identical */
+.trusted-brands-strip .cloned-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  margin-right: 30px;
 }
 
 /* Original Trusted Brands Section Styles - Keep for reference */

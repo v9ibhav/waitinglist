@@ -49,7 +49,7 @@
 
                 <!-- Trusted Brands Strip -->
                 <div class="trusted-brands-strip">
-                    <h4 class="trusted-brands-title">Trusted By</h4>
+                    <h4 class="trusted-brands-title">Trusted By Senior Executives from </h4>
                     <div class="brands-carousel-container">
                         <div class="brands-carousel">
                             <div class="brands-carousel-track">
@@ -83,6 +83,12 @@
                                 </div>
                                 <div class="brand-logo-container">
                                     <img src="images/bihar.png" loading="lazy" alt="Bihar" class="brand-logo" />
+                                </div>
+                                <div class="brand-logo-container">
+                                    <img src="images/lion.png" loading="lazy" alt="Lion" class="brand-logo" />
+                                </div>
+                                <div class="brand-logo-container">
+                                    <img src="images/lioness.png" loading="lazy" alt="Lioness" class="brand-logo" />
                                 </div>
                                 <!-- Duplicate logos for infinite scroll effect -->
                                 <div class="brand-logo-container">
@@ -135,6 +141,12 @@
                                 </div>
                                 <div class="person-container">
                                     <img src="images/avatar-20image-1.webp" loading="lazy" alt="Community member" class="person" />
+                                </div>
+                                <div class="person-container">
+                                    <img src="images/p5.jpg" loading="lazy" alt="Community member" class="person" />
+                                </div>
+                                <div class="person-container">
+                                    <img src="images/p4.jpg" loading="lazy" alt="Community member" class="person" />
                                 </div>
                             </div>
                             <p class="paragraph-simple">Join 100+ already onboard</p>
@@ -314,80 +326,89 @@
         // Brands Carousel functionality
         function initBrandsCarousel() {
             const track = document.querySelector('.brands-carousel-track');
-            const slides = Array.from(track.children);
+            const carousel = document.querySelector('.brands-carousel');
 
-            // Determine how many logos to show per slide based on screen width
-            let logosPerSlide = getLogosPerSlide();
-            let slideWidth = 100 / logosPerSlide; // As percentage
+            // Calculate the total width needed for smooth scrolling
+            const originalLogos = track.querySelectorAll('.brand-logo-container');
 
-            // Set initial slide width
-            slides.forEach(slide => {
-                slide.style.flexBasis = `${slideWidth}%`;
-                slide.style.minWidth = `${slideWidth}%`;
-            });
+            // Clone logos for continuous scrolling if needed
+            const originalLogosArray = Array.from(originalLogos);
 
-            // Clone the original slides for infinite scrolling effect
-            const clonedSlides = slides.map(slide => {
-                const clone = slide.cloneNode(true);
+            // Remove any previously cloned logos
+            track.querySelectorAll('.cloned-logo').forEach(el => el.remove());
+
+            // Add enough clones to ensure continuous scrolling
+            originalLogosArray.forEach(logo => {
+                const clone = logo.cloneNode(true);
+                clone.classList.add('cloned-logo');
                 track.appendChild(clone);
-                return clone;
             });
 
-            // Animation for infinite scrolling
-            let currentIndex = 0;
-            const totalSlides = slides.length;
-            const slideInterval = 3000; // 3 seconds
+            // Set animation
+            let scrollPosition = 0;
+            let scrollSpeed = 0.5; // pixels per frame - adjust for speed
 
-            function moveToNextSlide() {
-                currentIndex += logosPerSlide;
-                if (currentIndex >= totalSlides) {
-                    currentIndex = 0;
+            function animateScroll() {
+                scrollPosition -= scrollSpeed;
+
+                // Get the width of one set of logos
+                const firstSetWidth = originalLogosArray.reduce((sum, logo) => sum + logo.offsetWidth + parseInt(getComputedStyle(logo).marginRight), 0);
+
+                // Reset position when we've scrolled past one full set
+                if (Math.abs(scrollPosition) >= firstSetWidth) {
+                    scrollPosition += firstSetWidth;
                 }
-                updateCarouselPosition();
+
+                track.style.transform = `translateX(${scrollPosition}px)`;
+
+                // Highlight the center logo
+                highlightCenterLogo();
+
+                requestAnimationFrame(animateScroll);
             }
 
-            function updateCarouselPosition() {
-                const offset = -currentIndex * (100 / logosPerSlide);
-                track.style.transform = `translateX(${offset}%)`;
-            }
+            // Function to highlight the logo in the center
+            function highlightCenterLogo() {
+                // Get the center point of the carousel
+                const carouselRect = carousel.getBoundingClientRect();
+                const centerPoint = carouselRect.left + carouselRect.width / 2;
 
-            // Start the automatic sliding
-            let autoSlide = setInterval(moveToNextSlide, slideInterval);
+                // Remove highlight from all logos
+                track.querySelectorAll('.brand-logo-container').forEach(container => {
+                    container.classList.remove('center-highlight');
+                });
 
-            // Pause on hover
-            document.querySelector('.brands-carousel-container').addEventListener('mouseenter', () => {
-                clearInterval(autoSlide);
-            });
+                // Find the logo closest to the center
+                let closestLogo = null;
+                let closestDistance = Infinity;
 
-            document.querySelector('.brands-carousel-container').addEventListener('mouseleave', () => {
-                autoSlide = setInterval(moveToNextSlide, slideInterval);
-            });
+                track.querySelectorAll('.brand-logo-container').forEach(container => {
+                    const rect = container.getBoundingClientRect();
+                    const logoCenter = rect.left + rect.width / 2;
+                    const distance = Math.abs(logoCenter - centerPoint);
 
-            // Function to determine logos per slide based on screen width
-            function getLogosPerSlide() {
-                if (window.innerWidth < 480) return 2;
-                if (window.innerWidth < 768) return 3;
-                if (window.innerWidth < 992) return 4;
-                return 5;
-            }
+                    if (distance < closestDistance) {
+                        closestDistance = distance;
+                        closestLogo = container;
+                    }
+                });
 
-            // Handle window resize to adjust carousel
-            window.addEventListener('resize', () => {
-                const newLogosPerSlide = getLogosPerSlide();
-                if (newLogosPerSlide !== logosPerSlide) {
-                    logosPerSlide = newLogosPerSlide;
-                    slideWidth = 100 / logosPerSlide;
-
-                    // Update slide widths
-                    slides.forEach(slide => {
-                        slide.style.flexBasis = `${slideWidth}%`;
-                        slide.style.minWidth = `${slideWidth}%`;
-                    });
-
-                    // Reset carousel position
-                    currentIndex = 0;
-                    updateCarouselPosition();
+                // Add highlight class to the closest logo
+                if (closestLogo) {
+                    closestLogo.classList.add('center-highlight');
                 }
+            }
+
+            // Start the animation
+            animateScroll();
+
+            // Pause on hover for better user experience
+            track.addEventListener('mouseenter', () => {
+                scrollSpeed = 0;
+            });
+
+            track.addEventListener('mouseleave', () => {
+                scrollSpeed = 0.5;
             });
         }
     </script>
